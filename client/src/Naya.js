@@ -19,6 +19,9 @@ function Naya() {
           'remove',
           'history',
         ],
+        blockType: {
+          options: ['Normal', 'Blockquote', 'Code'],
+        },
         inline: {
           options: ['bold', 'italic', 'strikethrough'],
         },
@@ -50,8 +53,21 @@ function Naya() {
   const [convertedContent, setConvertedContent] = useState(null);
 
   useEffect(() => {
-    let html = convertToHTML(editorState.getCurrentContent());
+    const html = convertToHTML({
+      blockToHTML: (block) => {
+        if (block.type === 'code') {
+          return <pre><code>{block.text}</code></pre>;
+        }
+        // Handle other block types if needed
+      },
+    })(editorState.getCurrentContent());
+    //let html = convertToHTML(editorState.getCurrentContent());
     setConvertedContent(html);
+    
+
+    
+
+    //
   }, [editorState]);
 
   console.log(convertedContent);

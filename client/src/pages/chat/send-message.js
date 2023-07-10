@@ -62,7 +62,9 @@ const SendMessage = ({ socket, username, room }) => {
     inline: {
       options: ['bold', 'italic', 'strikethrough'],
     },
-    
+    blockType: {
+      options: ['Normal', 'Blockquote', 'Code'],
+    },
     list: {
       options: ['unordered', 'ordered'],
     },
@@ -88,8 +90,15 @@ const SendMessage = ({ socket, username, room }) => {
   );
   const [convertedContent, setConvertedContent] = useState(null);
 
-    useEffect(() => {
-    let html = convertToHTML(editorState.getCurrentContent());
+  useEffect(() => {
+    const html = convertToHTML({
+      blockToHTML: (block) => {
+        if (block.type === 'code') {
+          return <pre><code>{block.text}</code></pre>;
+        }
+        // Handle other block types if needed
+      },
+    })(editorState.getCurrentContent());
     setConvertedContent(html);
     setMessage(convertedContent);
   }, [editorState]);
