@@ -38,6 +38,12 @@ To deploy the Chat App, you have multiple options. Here are a few common methods
 
 - **Hosted Deployment**: To deploy the application to a hosting platform, such as GitHub Pages, Netlify, or Heroku, follow the specific deployment instructions for the platform you choose. Typically, you need to configure the build and deployment settings, including the build command, environment variables, and domain settings.
 
+- setting the build command to
+
+ ```
+  npm run build
+  ```
+
 
 ## Usage
 
