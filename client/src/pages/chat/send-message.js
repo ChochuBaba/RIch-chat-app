@@ -10,43 +10,31 @@ import { EditorState } from 'draft-js';
 const SendMessage = ({ socket, username, room }) => {
   const [message, setMessage] = useState('');
   const [suggestions, setSuggestions] = useState([]); // khaali suggestions
-  
-  
-
-  //woh suggestions wala
-
   const [roomUsers, setRoomUsers] = useState([]);
-
-  useEffect(() => {
-    socket.on('chatroom_users', (data) => {
-      console.log('suggestions wala array sadfsaf1');
-      setRoomUsers(data);
-      
-      const z newSuggestions = data.map((user) => ({
-        text: user.username.toUpperCase(),
-        value: user.username.toLowerCase(),
-      }));
   
-      setSuggestions(newSuggestions);
-
-    });
-
-
-    
-
-
-    return () => socket.off('chatroom_users');
-  }, [socket]);
-
-  //woh suggestions wala
+  //to get the room users
 
   useEffect(() => {
     socket.on('chatroom_users', (data) => {
-      console.log(data);
       setRoomUsers(data);
+      console.log('yaah par users ka data');
+      const suggestions = data.map(user => ({
+        text: user.username.toUpperCase(),
+        value: user.username.toLowerCase()
+      }));
+
+      setSuggestions(suggestions);
     });
+    
+  //for the at functionality
+
     return () => socket.off('chatroom_users');
   }, [socket]);
+
+
+  
+
+ 
 
   const sendMessage = () => {
     if (message !== '') {
@@ -129,10 +117,7 @@ const SendMessage = ({ socket, username, room }) => {
         mention={{
             separator: ' ',
             trigger: '@',
-            suggestions: [
-              { text: 'APPLE', value: 'apple'  },
-              { text: 'BANANA', value: 'banana' }
-            ],
+            suggestions: suggestions,
           }}
         
         
