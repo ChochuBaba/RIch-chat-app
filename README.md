@@ -28,13 +28,24 @@ To install and set up the Chat App, follow these steps:
 
 To deploy the Chat App, you have multiple options. Here are a few common methods:
 
-- **Local Development**: If you want to run the application locally for development purposes, you can use the development server provided by React.js. Run the following command in the project directory:
+- **Local Development**: If you want to run the application locally for development purposes, you can use the development server provided by React.js. Run the following command in the client directory:
 
   ```
   npm start
   ```
 
   This will start the development server and open the application in your default browser.
+
+  After this the front-end would be completely loaded now to load the server to facilitate the interaction
+
+  Go to the server folder and inside it run
+
+  ```
+  npm run dev
+  ```
+
+  This will run the custom script which will get the server going and running.
+  
 
 - **Hosted Deployment**: To deploy the application to a hosting platform, such as GitHub Pages, Netlify, or Heroku, follow the specific deployment instructions for the platform you choose. Typically, you need to configure the build and deployment settings, including the build command, environment variables, and domain settings.
 
