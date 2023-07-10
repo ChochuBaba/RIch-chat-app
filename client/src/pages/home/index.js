@@ -1,3 +1,4 @@
+import { Collapse } from 'bootstrap';
 import styles from './styles.module.css';
 import { useNavigate } from 'react-router-dom'; // Add this
 
@@ -16,7 +17,7 @@ const Home = ({ username, setUsername, room, setRoom, socket }) => {
   return (
     <div className={styles.container}>
       <div className={styles.formContainer}>
-        <h1>{`<>DevRooms</>`}</h1>
+        <h1 >{`<>Weird Whatsapp</>`}</h1>
         <input
           className={styles.input}
           placeholder='Username...'

@@ -10,7 +10,7 @@
   width: 400px;
   margin: 0 auto 0 auto;
   padding: 32px;
-  background: lightblue;
+  background: rgba(255, 255, 255, 0.596);
   border-radius: 6px;
   display: flex;
   flex-direction: column;
