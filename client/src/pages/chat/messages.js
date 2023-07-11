@@ -36,12 +36,6 @@ const Messages = ({ socket }) => {
       messagesColumnRef.current.scrollHeight;
   }, [messagesRecieved]);
 
-  function sortMessagesByDate(messages) {
-    return messages.sort(
-      (a, b) => parseInt(a.__createdtime__) - parseInt(b.__createdtime__)
-    );
-  }
-
   // dd/mm/yyyy, hh:mm:ss
   function formatDateFromTimestamp(timestamp) {
     const date = new Date(timestamp);

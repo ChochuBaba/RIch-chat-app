@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -56,7 +55,7 @@ io.on('connection', (socket) => {
 
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
-    io.in(room).emit('receive_message', data); // Send to all users in room, including sender
+    io.in(room).emit('receive_message', data); // Send to all users in room, including sender  //
     
   });
 
@@ -78,7 +77,7 @@ io.on('connection', (socket) => {
   socket.on('disconnect', () => {
     console.log('User disconnected from the chat');
     const user = allUsers.find((user) => user.id == socket.id);
-    if (user?.username) {
+    if (user?.username) { //checking if the user exists or has a username property
       allUsers = leaveRoom(socket.id, allUsers);
       socket.to(chatRoom).emit('chatroom_users', allUsers);
       socket.to(chatRoom).emit('receive_message', {
