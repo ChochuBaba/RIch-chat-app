@@ -1,9 +1,16 @@
+require('dotenv').config(); //loading the environment variables
+
 const express = require('express');
+
+const harperSaveMessage = require('./services/harper-save-message');
+const harperGetMessages = require('./services/harper-get-messages');
+
 const app = express();
 const http = require('http');
 const cors = require('cors');
 const { Server } = require('socket.io');
 const leaveRoom = require('./utils/leave-room'); // Add this
+
 
 app.use(cors()); // Add cors middleware
 
@@ -27,6 +34,13 @@ io.on('connection', (socket) => {
 
   // Add a user to a room
   socket.on('join_room', (data) => {
+    harperGetMessages(room) //this is used to get the last 100 messages which were sent in the same group
+      .then((last100Messages) => {
+        socket.emit('last_100_messages', last100Messages);
+      })
+      .catch((err) => console.log(err));
+
+
     const { username, room } = data; // Data sent from client when join_room event emitted
     socket.join(room); // Join the user to a socket room
 
@@ -56,6 +70,9 @@ io.on('connection', (socket) => {
   socket.on('send_message', (data) => {
     const { message, username, room, __createdtime__ } = data;
     io.in(room).emit('receive_message', data); // Send to all users in room, including sender  //
+    harperSaveMessage(message, username, room) // Save message in db
+    .then((response) => console.log(response))
+    .catch((err) => console.log(err)); //saving the message in our database
     
   });
 
@@ -80,8 +97,11 @@ io.on('connection', (socket) => {
     if (user?.username) { //checking if the user exists or has a username property
       allUsers = leaveRoom(socket.id, allUsers);
       socket.to(chatRoom).emit('chatroom_users', allUsers);
+      const __createdtime__ = Date.now();
       socket.to(chatRoom).emit('receive_message', {
+        username: CHAT_BOT,
         message: `${user.username} has disconnected from the chat.`,
+        __createdtime__,
       });
     }
   });

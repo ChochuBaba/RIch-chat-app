@@ -18,6 +18,7 @@ const SendMessage = ({ socket, username, room }) => {
     socket.on('chatroom_users', (data) => {
       setRoomUsers(data);
       console.log('yaah par users ka data');
+      
       const suggestions = data.map(user => ({
         text: user.username.toUpperCase(),
         value: user.username.toLowerCase()

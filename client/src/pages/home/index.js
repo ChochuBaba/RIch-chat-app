@@ -8,10 +8,16 @@ const Home = ({ username, setUsername, room, setRoom, socket }) => {
   const joinRoom = () => {
     if (room !== '' && username !== '') {
       socket.emit('join_room', { username, room });
+      navigate('/chat', { replace: true });
+    }
+    else 
+    {
+      console.log('nahi mila daya');
+      alert('please enter the input fields');
     }
 
     // Redirect to /chat
-    navigate('/chat', { replace: true });
+    
   };
 
   return (
@@ -29,10 +35,10 @@ const Home = ({ username, setUsername, room, setRoom, socket }) => {
           onChange={(e) => setRoom(e.target.value)}
         >
           <option>-- Select Room --</option>
-          <option value='javascript'>JavaScript</option>
-          <option value='node'>Node</option>
-          <option value='express'>Express</option>
-          <option value='react'>React</option>
+          <option value='group 1'>Group 1</option>
+          <option value='group 2'>Group 2</option>
+          <option value='group 3'>Group 3</option>
+          <option value='group 4'>Group 4</option>
         </select>
 
         <button
